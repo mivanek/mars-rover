@@ -1,0 +1,33 @@
+A couple of notes regarding my implementation of the test:
+
+I've seperated the code into 4 files: main.rb, cli.rb, rover.rb and map.rb.
+I've also included 2 other files, cli_automatic.rb and main_automatic.rb, which
+can be used for any automated testing. I've explained the difference between
+the files and their *_automatic.rb versions in the *_automatic.rb files. In the
+spec/ folder, you can also find a couple of RSpec tests for the assignment.
+
+To run the program, you can execute:
+
+    ruby main.rb
+
+    or
+
+    ruby main_automatic.rb
+
+main.rb is simply a file that requires cli.rb and then executes the
+MarsRoverCLI class, which handles user interaction with the program.
+main_automatic.rb is basically the same, but it includes cli_automatic.rb
+instead of cli.rb
+
+cli.rb handles user interaction with the app. It prompts users for input, and
+handles calling all the necessary methods to move the rover and checks for any
+collisions using the MarsMap class. The first prompt asks the user to input the
+number of the rovers, and every prompt after that handles map size, rover
+location and rover movement information, as described in the assigned task. For
+any automated inputs, there's cli_automatic.rb which removes prompting the user
+for the number of rovers and uses an infinite loop to create and move rovers
+over the map.
+
+rover.rb handles rover movement and orientation. It's a pretty simple class
+with only a couple of methods. The main methods for this class are move, which
+handles movement of the rover, and turn, which handles rover heading.
