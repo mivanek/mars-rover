@@ -1,10 +1,7 @@
-A couple of notes regarding my implementation of the test:
+A couple of notes regarding my implementation of the test.
 
-I've seperated the code into 4 files: main.rb, cli.rb, rover.rb and map.rb.
-I've also included 2 other files, cli_automatic.rb and main_automatic.rb, which
-can be used for any automated testing. I've explained the difference between
-the files and their *_automatic.rb versions in the *_automatic.rb files. In the
-spec/ folder, you can also find a couple of RSpec tests for the assignment.
+I've seperated the code into 4 files: main.rb, cli.rb, rover.rb and map.rb. In
+the spec/ folder, you can also find a couple of RSpec tests for the assignment.
 
 To run the program, you can execute:
 
@@ -12,22 +9,50 @@ To run the program, you can execute:
 
     or
 
-    ruby main_automatic.rb
+    chmod +x main.rb (in case the permissions aren't set to execute)
+    ./main.rb
 
 main.rb is simply a file that requires cli.rb and then executes the
 MarsRoverCLI class, which handles user interaction with the program.
-main_automatic.rb is basically the same, but it includes cli_automatic.rb
-instead of cli.rb
+I've also included an '--automatic' flag, which runs the program without
+outputing user instructions.
 
-cli.rb handles user interaction with the app. It prompts users for input, and
-handles calling all the necessary methods to move the rover and checks for any
-collisions using the MarsMap class. The first prompt asks the user to input the
-number of the rovers, and every prompt after that handles map size, rover
-location and rover movement information, as described in the assigned task. For
-any automated inputs, there's cli_automatic.rb which removes prompting the user
-for the number of rovers and uses an infinite loop to create and move rovers
-over the map.
+cli.rb includes the MarsRoverCLI class and handles user interaction with the
+app. It prompts users for input, and handles calling all the necessary methods
+to move the rover and checks for any collisions using the MarsMap class. The
+first prompt asks the user to input the number of rovers, and every prompt
+after that handles map size, rover location and rover movement information, as
+described in the assigned task. For any automated inputs, there's the
+--automatic flag, which removes prompting the user for the number of rovers and
+uses an infinite loop to create and move rovers through the map. The user input
+sanitation should be pretty robust, and you can check some inputs it can handle
+by looking through cli_spec.rb
 
-rover.rb handles rover movement and orientation. It's a pretty simple class
-with only a couple of methods. The main methods for this class are move, which
-handles movement of the rover, and turn, which handles rover heading.
+rover.rb contains the MarsRover class and handles rover movement and
+orientation. It's a pretty simple class with only a couple of methods. The main
+and public methods for this class are move, which handles movement of the
+rover, and turn, which handles rover heading. There's also a public
+position_and_heading method, which outputs the rover's coordinates and current
+heading as a string, as well as a couple of private methods which handle
+coordinate and heading extraction from user input.  Calculating movement is
+pretty simple, since it only requires that I check for the heading and either
+add or substract one to the appropriate coordinate. To calculate new heading,
+I'm using a hash as a dictionary of sorts, which includes all the possible
+headings as keys, as well as all the possible new headings from the current
+heading as hash values.
+
+map.rb contains the MarsMap class and handles all the rovers located on a map.
+The only public method is check_location, which checks to see if the rover
+moved outside of bounds or moved where another rover is already located. If
+either of those happen, the application throws a RoverOutOfBounds exception or
+RoverCollision exception, depending on what's wrong. I'm using an instance
+variable, @rovers, to keep track of all the rovers on the map and to check if
+the rover collided with any of the existing rovers.
+
+The spec/ folder includes a couple of RSpec test, which can be run executing:
+
+    rspec spec/
+
+The tests aren't too complicated or extensive, so there's not much to say here.
+I'm testing a couple of simple inputs to check if there are any obvious errors
+in the app. I've used the RSpec 3.0 syntax for these tests.

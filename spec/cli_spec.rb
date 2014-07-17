@@ -1,5 +1,5 @@
 require 'rspec'
-require './tests/spec_helper'
+require './spec/spec_helper'
 require './cli'
 
 describe MarsRoverCLI do

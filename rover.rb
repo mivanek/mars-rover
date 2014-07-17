@@ -50,7 +50,7 @@ class MarsRover
     end
 
     def check_location(location)
-      raise InvalidInputError, "You have entered an invalid input, please try again" if location.length != 2
+      raise InvalidInputError, "The coordinates you entered were invalid, please try again." if location.length != 2
       location
     end
 end
