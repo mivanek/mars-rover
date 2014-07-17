@@ -28,4 +28,14 @@ describe MarsRoverCLI do
       expect(output).to include("1 3 N", "5 1 E")
     end
   end
+
+  context "moving a rover with an illegal move command" do
+    before do
+      allow(subject).to receive(:gets).and_return("1", "5 5\n", "1 2 N\n", "LMLALMLMM\n")
+    end
+
+    it "should raise an error" do
+      expect { subject.start }.to raise_error(InvalidInputError)
+    end
+  end
 end

@@ -27,6 +27,7 @@ class MarsRover
   end
 
   def turn(direction)
+    check_direction(direction)
     @heading = ORIENTATIONS[@heading][direction]
   end
 
@@ -52,6 +53,10 @@ class MarsRover
     def check_location(location)
       raise InvalidInputError, "The coordinates you entered were invalid, please try again." if location.length != 2
       location
+    end
+
+    def check_direction(location)
+      raise InvalidInputError, "The rover movement commands you entered were invalid, please try again" if !["L", "R"].include? location
     end
 end
 

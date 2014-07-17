@@ -19,7 +19,7 @@ describe MarsMap do
       end
 
       it "should raise an error when your rover goes outside of map boundaries" do
-        expect { subject.check_location([6,1]) }.to raise_error(RoverOutOfBounds)
+        expect { subject.check_location([6, 1]) }.to raise_error(RoverOutOfBounds)
       end
     end
   end
@@ -39,7 +39,7 @@ describe MarsMap do
       end
 
       it "should raise an error when your rover goes outside of map boundaries" do
-        expect { subject.check_location([6,1]) }.to raise_error(RoverOutOfBounds)
+        expect { subject.check_location([6, 1]) }.to raise_error(RoverOutOfBounds)
       end
     end
   end
